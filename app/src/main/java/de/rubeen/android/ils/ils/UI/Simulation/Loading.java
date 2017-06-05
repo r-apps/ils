@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import de.rubeen.android.ils.ils.BuildConfig;
 import de.rubeen.android.ils.ils.R;
+import de.rubeen.ils.Simulation;
+import de.rubeen.ils.SimulationParams;
 
 /**
  * Created by rubeen on 05.06.17.
@@ -25,11 +28,7 @@ public class Loading extends AppCompatActivity {
     private class LoadFiles extends AsyncTask<Integer, Integer, Integer> {
         @Override
         protected Integer doInBackground(Integer... params) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            new Simulation(new SimulationParams(BuildConfig.DEBUG));
             return 0;
         }
 

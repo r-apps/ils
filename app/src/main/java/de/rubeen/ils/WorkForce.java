@@ -10,6 +10,12 @@ import de.rubeen.ils.enums.EmergencyType;
 class WorkForce {
     private EmergencyType type;
     private int force;
+    private Operation actualOperation;
+
+    public WorkForce(EmergencyType type, int force, Operation operation) {
+        this(type, force);
+        this.actualOperation = operation;
+    }
 
     public WorkForce(EmergencyType type, int force) {
         this.type = type;
@@ -25,4 +31,7 @@ class WorkForce {
         return force;
     }
 
+    public void setActualOperation(Operation actualOperation) {
+        this.actualOperation = actualOperation;
+    }
 }

@@ -9,9 +9,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import de.rubeen.android.ils.ils.R;
+import de.rubeen.android.ils.ils.UI.Simulation.adapter.OverviewViewAdapter;
+import de.rubeen.ils.Simulation;
 
 /**
  * Created by rubeen on 05.06.17.
@@ -26,6 +29,16 @@ public class Home extends AppCompatActivity {
         //Initialisations
         floatingButton();
         setActionBar();
+        fillOperationsList();
+
+        //TODO sort
+    }
+
+    private void fillOperationsList() {
+        Simulation simulation = Simulation.getInstance();
+        OverviewViewAdapter viewAdapter = new OverviewViewAdapter(this, simulation.getOperations());
+        ListView listView = (ListView) findViewById(R.id.simulation_home_overviewLayout);
+        listView.setAdapter(viewAdapter);
     }
 
     private void setActionBar() {
