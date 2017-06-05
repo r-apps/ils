@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Emergency control station</string>
+    <string name="app_name">Emergency control</string>
+    <string name="simulation_home_title">Dashboard</string>
 </resources>
