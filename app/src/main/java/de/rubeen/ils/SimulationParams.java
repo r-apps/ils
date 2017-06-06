@@ -1,9 +1,10 @@
 package de.rubeen.ils;
 
-public class SimulationParams {
-    protected final boolean isDEBUG;
+import de.rubeen.android.ils.ils.BuildConfig;
 
-    public SimulationParams(boolean isDEBUG) {
-        this.isDEBUG = isDEBUG;
+public class SimulationParams {
+    protected final boolean isDEBUG = BuildConfig.DEBUG;
+
+    public SimulationParams() {
     }
 }

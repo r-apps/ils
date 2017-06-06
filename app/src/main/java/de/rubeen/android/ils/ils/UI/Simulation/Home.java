@@ -20,6 +20,8 @@ import de.rubeen.ils.Simulation;
 
 /**
  * Created by rubeen on 05.06.17.
+ *
+ * Simulation homeView with various lists
  */
 
 public class Home extends AppCompatActivity {
@@ -39,12 +41,22 @@ public class Home extends AppCompatActivity {
         setActionBar();
         fillOperationsList();
         tabList();
+        setVisibilities();
 
+    }
 
+    /**
+     * Sets all views and the loading indicator to gone
+     * only overview is visible.
+     */
+    private void setVisibilities() {
         findViewById(R.id.simulation_home_loadingContainer).setVisibility(View.GONE);
         findViewById(R.id.simulation_home_overviewContainer).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * initialize tabList with its tabSelected handler
+     */
     private void tabList() {
         TabLayout layout = (TabLayout) findViewById(R.id.simulation_home_tabBar);
         layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -85,6 +97,9 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    /**
+     * fill viewAdapter and bind to the list
+     */
     private void fillOperationsList() {
         Simulation simulation = Simulation.getInstance();
         OverviewViewAdapter viewAdapter = new OverviewViewAdapter(this, simulation.getOperations());
@@ -92,11 +107,16 @@ public class Home extends AppCompatActivity {
         listView.setAdapter(viewAdapter);
     }
 
+    /**
+     * activate actionBar
+     */
     private void setActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.simulation_home_toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.simulation_home_toolbar));
     }
 
+    /**
+     * initialize floatingButton with its onClickListener
+     */
     private void floatingButton() {
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -107,24 +127,35 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    /**
+     * initializations for appBar options menu
+     *
+     * @param menu not relevant
+     * @return nothing
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(Home.this).inflate(R.menu.simulation_menu, menu);
-        menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return super.onCreateOptionsMenu(menu);
     }
 
-
-    //TODO: option selection
+    /**
+     * appBar options menu clickedHandler
+     *
+     * @param item item in appBarMenu
+     * @return nothing
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //TODO: option selection
         switch (item.getItemId()) {
             case R.id.simulation_menu_phone:
                 startActivity(new Intent(Home.this, Dialer.class));
                 break;
             default:
                 if (Debug.isDebuggerConnected())
-                    new UnsupportedOperationException("Funktion noch nicht implementiert.");
+                    throw new UnsupportedOperationException("function not implemented.");
                 break;
         }
         return super.onOptionsItemSelected(item);

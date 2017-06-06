@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:title="@string/simulation_home_title"></android.support.v7.widget.Toolbar>
+            app:title="@string/simulation_home_title" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/simulation_home_tabBar"
@@ -93,9 +93,9 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
+        android:layout_gravity="end|bottom"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:clickable="true"
         android:src="@android:drawable/ic_delete"
         app:fabSize="mini" />

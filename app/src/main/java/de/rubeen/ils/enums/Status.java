@@ -1,5 +1,8 @@
 package de.rubeen.ils.enums;
 
+/**
+ * status for operations
+ */
 public enum Status {
-    open, inProgress, sucess, failure, needAttention,
+    open, inProgress, success, failure, needAttention,
 }

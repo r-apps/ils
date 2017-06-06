@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import de.rubeen.android.ils.ils.R;
 
 /**
  * Created by rubeen on 06.06.17.
+ *
+ * Dialer activity to call a number / a contact
  */
 
 public class Dialer extends AppCompatActivity {
@@ -30,7 +33,16 @@ public class Dialer extends AppCompatActivity {
         setupDialerButtons();
     }
 
+    /**
+     * Set onClickListener to numberButtons
+     * Set onTouchListener to deleteButton
+     *
+     * @see BackPressHandler
+     * Set onClickListener to callButton
+     */
     private void setupDialerButtons() {
+
+        //Number-Handler
         Button[] buttons = {
                 (Button) findViewById(R.id.simulation_dialer_dialerContent_btn_1),
                 (Button) findViewById(R.id.simulation_dialer_dialerContent_btn_2),
@@ -54,6 +66,7 @@ public class Dialer extends AppCompatActivity {
             });
         }
 
+        //DELETE-Handler
         findViewById(R.id.simulation_dialer_dialerContent_btn_BACK).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -61,17 +74,37 @@ public class Dialer extends AppCompatActivity {
                 return false;
             }
         });
+
+        //CALL-Handler
+        findViewById(R.id.simulation_dialer_dialerContent_btn_CALL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dialer.this,
+                        "Should call: ".concat(((EditText) findViewById(R.id.simulation_dialer_editText)).getText().toString()),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    /**
+     * disable keyboard for numberTB
+     */
     private void setupEditText() {
         EditText editText = (EditText) findViewById(R.id.simulation_dialer_editText);
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editText.getWindowToken(), 0);
         editText.setInputType(InputType.TYPE_NULL);
     }
 
-    private class BackPressHandler extends AsyncTask<MotionEvent, Integer, Integer> {
+    /**
+     * Handles click + longClick
+     * on long click the telNR is being deleted.
+     */
+    private class BackPressHandler extends AsyncTask<MotionEvent, Void, Void> {
         MotionEvent event = null;
 
+        /**
+         * check if first time, else return
+         */
         @Override
         protected void onPreExecute() {
             if (i != 0) {
@@ -81,12 +114,17 @@ public class Dialer extends AppCompatActivity {
             super.onPreExecute();
         }
 
+        /**
+         * remove digit, wait, check if not clicked anymore, repeat or return
+         * @param params motionEvent for tracking click-status
+         * @return nothing
+         */
         @Override
-        protected Integer doInBackground(MotionEvent... params) {
+        protected Void doInBackground(MotionEvent... params) {
             try {
                 do {
                     event = params[0];
-                    publishProgress(0);
+                    publishProgress();
                     i++;
                     System.out.println(i);
                     Thread.sleep(100);
@@ -98,7 +136,13 @@ public class Dialer extends AppCompatActivity {
             return null;
         }
 
-        protected void onProgressUpdate(Integer... values) {
+        /**
+         * deletes last digit in phoneNumberText
+         * if clicked x seconds, remove phone number
+         *
+         * @param values not used
+         */
+        protected void onProgressUpdate(Void... values) {
             EditText text = (EditText) findViewById(R.id.simulation_dialer_editText);
             String s = text.getText().toString();
             if (s.length() > 0) {
@@ -109,11 +153,15 @@ public class Dialer extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
 
+        /**
+         * set i to 0, if finished
+         * @param aVoid not used
+         */
         @Override
-        protected void onPostExecute(Integer integer) {
+        protected void onPostExecute(Void aVoid) {
             if (event != null && event.getAction() == MotionEvent.ACTION_UP)
                 i = 0;
-            super.onPostExecute(integer);
+            super.onPostExecute(aVoid);
         }
     }
 }

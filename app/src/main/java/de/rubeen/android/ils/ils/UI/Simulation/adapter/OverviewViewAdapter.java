@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import de.rubeen.android.ils.ils.R;
@@ -16,6 +18,8 @@ import de.rubeen.ils.Operation;
 
 /**
  * Created by rubeen on 05.06.17.
+ *
+ * ViewAdapter to create overViewList in simulation_home
  */
 
 public class OverviewViewAdapter extends ArrayAdapter<Operation> {
@@ -27,7 +31,7 @@ public class OverviewViewAdapter extends ArrayAdapter<Operation> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NotNull ViewGroup parent) {
         Operation operation = getItem(position);
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_simulation_home_overview, parent, false);
