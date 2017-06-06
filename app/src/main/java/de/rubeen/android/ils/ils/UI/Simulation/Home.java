@@ -1,8 +1,10 @@
 package de.rubeen.android.ils.ils.UI.Simulation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +23,12 @@ import de.rubeen.ils.Simulation;
  */
 
 public class Home extends AppCompatActivity {
+    //Positions for TABS
+    private final int TAB_POSITION_OVERVIEW = 0;
+    private final int TAB_POSITION_OPERATION = 1;
+    private final int TAB_POSITION_CARS = 2;
+    private final int TAB_POSITION_STATIONS = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +38,57 @@ public class Home extends AppCompatActivity {
         floatingButton();
         setActionBar();
         fillOperationsList();
+        tabList();
 
-        //TODO sort
+
+        findViewById(R.id.simulation_home_loadingContainer).setVisibility(View.GONE);
+        findViewById(R.id.simulation_home_overviewContainer).setVisibility(View.VISIBLE);
+    }
+
+    private void tabList() {
+        TabLayout layout = (TabLayout) findViewById(R.id.simulation_home_tabBar);
+        layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case TAB_POSITION_OVERVIEW:
+                        findViewById(R.id.simulation_home_overviewContainer).setVisibility(View.VISIBLE);
+                        break;
+                    case TAB_POSITION_OPERATION:
+                        break;
+                    case TAB_POSITION_CARS:
+                        break;
+                    case TAB_POSITION_STATIONS:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case TAB_POSITION_OVERVIEW:
+                        findViewById(R.id.simulation_home_overviewContainer).setVisibility(View.GONE);
+                        break;
+                    case TAB_POSITION_OPERATION:
+                        break;
+                    case TAB_POSITION_CARS:
+                        break;
+                    case TAB_POSITION_STATIONS:
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void fillOperationsList() {
         Simulation simulation = Simulation.getInstance();
         OverviewViewAdapter viewAdapter = new OverviewViewAdapter(this, simulation.getOperations());
-        ListView listView = (ListView) findViewById(R.id.simulation_home_overviewLayout);
+        ListView listView = (ListView) findViewById(R.id.simulation_home_overviewContainer);
         listView.setAdapter(viewAdapter);
     }
 
@@ -69,7 +120,7 @@ public class Home extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.simulation_menu_phone:
-                Toast.makeText(Home.this, "dialer should open now.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Home.this, Dialer.class));
                 break;
             default:
                 if (Debug.isDebuggerConnected())

@@ -22,7 +22,7 @@
             app:title="@string/simulation_home_title"></android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/simulation_home_tabBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable">
@@ -56,10 +56,35 @@
 
         </android.support.v4.widget.NestedScrollView>-->
 
-        <ListView
-            android:id="@+id/simulation_home_overviewLayout"
+        <RelativeLayout
+            android:id="@+id/simulation_home_loadingContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/simulation_home_loadingContainer_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <!-- TODO: strings.xml -->
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/simulation_home_loadingContainer_progressbar"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="!Interface is loading..." />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/simulation_home_overviewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </LinearLayout>
 
 

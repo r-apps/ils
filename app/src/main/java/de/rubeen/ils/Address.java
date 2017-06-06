@@ -30,11 +30,11 @@ public class Address {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(city);
+        StringBuilder builder = new StringBuilder(getStreet());
         builder.append(", ");
-        builder.append(zip);
+        builder.append(getZip());
         builder.append(" ");
-        builder.append(city);
+        builder.append(getCity());
         return builder.toString();
     }
 }
