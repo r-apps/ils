@@ -16,6 +16,7 @@ public class Simulation {
     private static Simulation instance;
 
     private ArrayList<Operation> listOperation;
+    private ArrayList<WorkForce> listWorkForce;
 
 
     public Simulation(SimulationParams simulationParams) {
@@ -43,6 +44,15 @@ public class Simulation {
     }
 
     /**
+     * Create lists, & maps
+     */
+    private void createLists() {
+        listOperation = new ArrayList<>();
+        listWorkForce = new ArrayList<>();
+    }
+
+
+    /**
      * Fill lists // only when DEBUG //TODO: better with mocks, but how :(
      */
     private void fillLists() {
@@ -53,23 +63,29 @@ public class Simulation {
         listOperation.add(new Operation("Fallen tree", new Date(), 30, OrganisationType.tech, new Address("Street 5", "11111", "City 5")));
         listOperation.add(new Operation("Thief", new Date(), 30, OrganisationType.police, new Address("Street 6", "38259", "City 6")));
 
+        listWorkForce.add(new WorkForce(OrganisationType.crash, 50));
+        listWorkForce.add(new WorkForce(OrganisationType.fire, 100));
+        listWorkForce.add(new WorkForce(OrganisationType.ambulance, 50));
+        listWorkForce.add(new WorkForce(OrganisationType.ambulance, 80));
+        listWorkForce.add(new WorkForce(OrganisationType.tech, 100));
+        listWorkForce.add(new WorkForce(OrganisationType.police, 80));
+
         for (int i = 0; i < listOperation.size(); i++) {
-            for (int j = 0; j < (i * 10); j++) {
-                listOperation.get(i).work(new WorkForce(OrganisationType.ambulance, 50));
-                listOperation.get(i).work(new WorkForce(OrganisationType.crash, 50));
-                listOperation.get(i).work(new WorkForce(OrganisationType.fire, 50));
-                listOperation.get(i).work(new WorkForce(OrganisationType.police, 50));
-                listOperation.get(i).work(new WorkForce(OrganisationType.tech, 50));
-            }
+            listWorkForce.get(i).setActualOperation(listOperation.get(i));
+
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+            listOperation.get(i).work(listWorkForce.get(i));
+
             System.out.println(String.format("[PROGRESS] %s von %s", String.valueOf(listOperation.get(i).getProgress()), String.valueOf(listOperation.get(i).getMaxProgress())));
         }
-    }
-
-    /**
-     * Create lists, & maps
-     */
-    private void createLists() {
-        listOperation = new ArrayList<>();
     }
 }
 

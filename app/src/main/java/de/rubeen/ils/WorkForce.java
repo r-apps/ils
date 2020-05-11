@@ -9,7 +9,7 @@ import de.rubeen.ils.enums.OrganisationType;
  * instance of a workForce
  */
 
-class WorkForce {
+public class WorkForce {
     private final OrganisationType type;
     private int force;
     private Operation actualOperation;
